@@ -101,7 +101,11 @@
                 </td>
                 
             </tr>
-            
+            <tr style="display: grid;">
+                <td>
+                    <asp:Button ID="BtnNovoLivro" OnClick="BtnNovoLivro_Click" Text="Salvar" runat="server" />
+                </td>
+            </tr>            
         </table>
     </div>
 </asp:Content>
