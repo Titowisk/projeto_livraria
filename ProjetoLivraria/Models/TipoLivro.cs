@@ -5,6 +5,7 @@ using System.Web;
 
 namespace ProjetoLivraria.Models
 {
+    [Serializable]
     public class TipoLivro
     {
         public TipoLivro(decimal til_id_tipo_livro, string til_ds_descricao)

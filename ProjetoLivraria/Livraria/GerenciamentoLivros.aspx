@@ -7,12 +7,12 @@
             <tr style="display: grid;">
                 <%-- Titulo Livro --%>
                 <td>
-                    <asp:Label ID="lblCadastroNomeLivro" Text="Título: " runat="server" />
+                    <asp:Label ID="lblCadastroTituloLivro" Text="Título: " runat="server" />
                 </td>
                 <td>
-                    <asp:TextBox ID="tbxCadastroNomeLivro" runat="server" CssClass="form-control" 
+                    <asp:TextBox ID="tbxCadastroTituloLivro" runat="server" CssClass="form-control" 
                         Height="35px" Width="400px"/>
-                    <asp:RequiredFieldValidator ErrorMessage="Digite o título do livro!" ControlToValidate="tbxCadastroNomeLivro" runat="server" 
+                    <asp:RequiredFieldValidator ErrorMessage="Digite o título do livro!" ControlToValidate="tbxCadastroTituloLivro" runat="server" 
                         Style="color: red;"/>
                 </td>
                 
@@ -38,8 +38,8 @@
                 <td>
                     <%-- carregar categorias existentes aqui quando a página carregar --%>
                     <asp:DropDownList ID="ddlCadastroCategoriaLivro" runat="server">
-                        <asp:ListItem Text="categoria1" />
-                        <asp:ListItem Text="categoria2" />
+                        <asp:ListItem Selected="True" Value="" Text="-" />
+                        <%--<asp:ListItem Value="IdDaCategoria" Text="categoria2" />--%>
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator ErrorMessage="Escolha uma categoria!" ControlToValidate="ddlCadastroCategoriaLivro" runat="server" 
                         Style="color: red;"/>

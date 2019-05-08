@@ -13,22 +13,22 @@ namespace ProjetoLivraria.Livraria {
     public partial class GerenciamentoLivros {
         
         /// <summary>
-        /// lblCadastroNomeLivro control.
+        /// lblCadastroTituloLivro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCadastroNomeLivro;
+        protected global::System.Web.UI.WebControls.Label lblCadastroTituloLivro;
         
         /// <summary>
-        /// tbxCadastroNomeLivro control.
+        /// tbxCadastroTituloLivro control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxCadastroNomeLivro;
+        protected global::System.Web.UI.WebControls.TextBox tbxCadastroTituloLivro;
         
         /// <summary>
         /// lblCadastroResumoLivro control.

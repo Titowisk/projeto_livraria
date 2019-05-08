@@ -1,8 +1,10 @@
 ﻿using ProjetoLivraria.DAO;
 using ProjetoLivraria.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -27,7 +29,7 @@ namespace ProjetoLivraria.Livraria
             {
                 ViewState["ViewStateListaLivros"] = value;
             }
-        } // tem necessidade do ViewState?
+        } 
         public BindingList<Editores> ListaEditores
         {
             get
@@ -57,9 +59,20 @@ namespace ProjetoLivraria.Livraria
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // carregar editores 
+            if (!IsPostBack)
+            {
+                // carregar editores 
 
-            // carregar categorias
+                // carregar categorias
+                this.CarregaCategorias();
+                CarregaDropDownListCategoria();
+
+                // carrega lista de livros
+               
+            }
+
+          
+            
         }
 
         private void CarregaDados()
@@ -80,16 +93,81 @@ namespace ProjetoLivraria.Livraria
             this.ListaEditores = ioEditoresDAO.BuscaEditores();
         }
 
+        // cria uma tabela que armazena valores que serão usados na DropDownList de Categoria
+        private void CarregaDropDownListCategoria()
+        {
+            // Specify the data source and field names for the Text 
+            // and Value properties of the items (ListItem objects) 
+            // in the DropDownList control.
+            ddlCadastroCategoriaLivro.DataSource = CreateCategoriaDataSource();
+            ddlCadastroCategoriaLivro.DataTextField = "TipoLivroDescricao";
+            ddlCadastroCategoriaLivro.DataValueField = "TipoLivroId";
+
+            // Bind the data to the control.
+            ddlCadastroCategoriaLivro.DataBind();
+
+            // Set the default selected item, if desired.
+            ddlCadastroCategoriaLivro.SelectedIndex = 0;
+
+        }
+
+
+        private ICollection CreateCategoriaDataSource ()
+        {
+            // Fonte: https://docs.microsoft.com/pt-br/dotnet/api/system.web.ui.webcontrols.dropdownlist?view=netframework-4.8#exemplos
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("TipoLivroDescricao", typeof(string))); // Text
+            dt.Columns.Add(new DataColumn("TipoLivroId", typeof(decimal))); // Value
+
+            foreach (var categoria in this.ListaCategorias)
+            {
+                dt.Rows.Add(CreateRow(categoria.til_ds_descricao, categoria.til_id_tipo_livro, dt));
+            }
+
+            // Create a DataView from the DataTable to act as the data source
+            // for the DropDownList control.
+            DataView dv = new DataView(dt);
+            return dv;
+        }
+
+        DataRow CreateRow(string Text, decimal Value, DataTable dt)
+        {
+
+            // Create a DataRow using the DataTable defined in the 
+            // CreateDataSource method.
+            DataRow dr = dt.NewRow();
+
+            // This DataRow contains the ColorTextField and ColorValueField 
+            // fields, as defined in the CreateDataSource method. Set the 
+            // fields with the appropriate value. Remember that column 0 
+            // is defined as ColorTextField, and column 1 is defined as 
+            // ColorValueField.
+            dr[0] = Text;
+            dr[1] = Value;
+
+            return dr;
+
+        }
+
+        
+
         public void BtnNovoLivro_Click (object sender, EventArgs e)
         {
             // botão para submeter o formulário e assim criar um novo livro
             try
             {
+                // ID
                 decimal ldcIdLivro = this.ListaLivros.OrderByDescending(livro => livro.liv_id_livro).First().liv_id_livro + 1;
                 // Titulo
+                string lsTituloLivro = this.tbxCadastroTituloLivro.Text;
                 // Resumo
+                string lsResumoLivro = this.tbxCadastroResumoLivro.Text;
                 // Categoria (ID)
+                decimal ldcIdTipoLivro = Convert.ToDecimal( this.ddlCadastroCategoriaLivro.SelectedItem.Value );
                 // Preço
+                
                 // Royalty
                 // Editor (ID)
 
