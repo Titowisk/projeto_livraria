@@ -18,7 +18,7 @@ namespace ProjetoLivraria.DAO
         private string _preco = "LIV_VL_PRECO"; // decimal
         private string _royalty = "LIV_PC_ROYALTY"; // decimal
         private string _resumo = "LIV_DS_RESUMO"; // string
-        private string _edicao = "LIV_NU_EDICAO"; // string
+        private string _edicao = "LIV_NU_EDICAO"; // int
         SqlCommand ioQuery;
         SqlConnection ioConexao;
 
@@ -111,7 +111,7 @@ namespace ProjetoLivraria.DAO
         public int InsereLivro (Livros aoNovoLivro)
         {
             var liQtdRegistrosInseridos = 0;
-            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStrings"].ConnectionString))
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
             {
                 try
                 {
@@ -119,7 +119,7 @@ namespace ProjetoLivraria.DAO
                     if (aoNovoLivro == null) throw new NullReferenceException();
                     ioQuery = new SqlCommand($@"INSERT INTO LIV_LIVROS ({_id}, {_id_tipo_livro}, {_id_editor}, {_titulo},
                                             {_preco}, {_royalty}, {_resumo}, {_edicao})
-                                            VALUES (@idLivro, @idTipoLivro, @idEditor, @tituloLivro, @precoLivro, @royaltyLivro, @resumoLivro, @edicaoLivro)");
+                                            VALUES (@idLivro, @idTipoLivro, @idEditor, @tituloLivro, @precoLivro, @royaltyLivro, @resumoLivro, @edicaoLivro)", ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idLivro", aoNovoLivro.liv_id_livro));
                     ioQuery.Parameters.Add(new SqlParameter("@idTipoLivro", aoNovoLivro.liv_id_tipo_livro));
                     ioQuery.Parameters.Add(new SqlParameter("@idEditor", aoNovoLivro.liv_id_editor));

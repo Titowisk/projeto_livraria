@@ -62,12 +62,15 @@ namespace ProjetoLivraria.Livraria
             if (!IsPostBack)
             {
                 // carregar editores 
+                this.CarregaEditores();
+                CarregaDropDownListEditor();
 
                 // carregar categorias
                 this.CarregaCategorias();
                 CarregaDropDownListCategoria();
 
                 // carrega lista de livros
+
                
             }
 
@@ -93,6 +96,20 @@ namespace ProjetoLivraria.Livraria
             this.ListaEditores = ioEditoresDAO.BuscaEditores();
         }
 
+        private void CarregaDropDownListEditor()
+        {
+            // cria o data source que irá alimentar o DropDownList de Editores
+            ddlCadastroEditorLivro.DataSource = CreateEditorDataSource();
+            ddlCadastroEditorLivro.DataTextField = "EditorNome"; // valor mostrado
+            ddlCadastroEditorLivro.DataValueField = "EditorId"; // valor oculto
+
+            ddlCadastroEditorLivro.DataBind();
+
+            ddlCadastroEditorLivro.SelectedIndex = 0;
+        }
+
+        
+
         // cria uma tabela que armazena valores que serão usados na DropDownList de Categoria
         private void CarregaDropDownListCategoria()
         {
@@ -109,6 +126,22 @@ namespace ProjetoLivraria.Livraria
             // Set the default selected item, if desired.
             ddlCadastroCategoriaLivro.SelectedIndex = 0;
 
+        }
+
+        private ICollection CreateEditorDataSource()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("EditorNome", typeof(string)));
+            dt.Columns.Add(new DataColumn("EditorId", typeof(decimal)));
+
+            foreach (var editor in this.ListaEditores)
+            {
+                dt.Rows.Add(CreateRow(editor.edi_nm_editor, editor.edi_id_editor, dt));
+            }
+
+            DataView dv = new DataView(dt);
+            return dv;
         }
 
 
@@ -134,6 +167,8 @@ namespace ProjetoLivraria.Livraria
 
         DataRow CreateRow(string Text, decimal Value, DataTable dt)
         {
+            // Essa função serve tanto para TipoLivro, como para Editor
+            // pois as informações que pego deles, possuem o mesmo tipo
 
             // Create a DataRow using the DataTable defined in the 
             // CreateDataSource method.
@@ -167,14 +202,25 @@ namespace ProjetoLivraria.Livraria
                 // Categoria (ID)
                 decimal ldcIdTipoLivro = Convert.ToDecimal( this.ddlCadastroCategoriaLivro.SelectedItem.Value );
                 // Preço
-                
+                decimal lsPrecoLivro = Convert.ToDecimal(this.tbxCadastroPrecoLivro.Text);
                 // Royalty
+                decimal lsRoyaltyLivro = Convert.ToDecimal(this.tbxCadastroRoyaltyLivro.Text);
                 // Editor (ID)
+                decimal ldcIdEditor = Convert.ToDecimal(this.ddlCadastroEditorLivro.SelectedItem.Value);
+                // Numero Edicao
+                int lsNumeroEdicaoLivro = Convert.ToInt32(this.tbxCadastroNumeroEdicaoLivro.Text);
 
+                Livros loLivro = new Models.Livros(ldcIdLivro, ldcIdTipoLivro, ldcIdEditor, lsTituloLivro,
+                    lsPrecoLivro, lsRoyaltyLivro, lsResumoLivro, lsNumeroEdicaoLivro);
+                this.CarregaDados();
+                ioLivrosDAO.InsereLivro(loLivro);
+                HttpContext.Current.Response.Write("<script>alert('Livro cadastrado com sucesso!');</script>");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                HttpContext.Current.Response.Write("<script>console.log('Erro no cadastro do Autor!');</script>");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 throw;
             }
         }

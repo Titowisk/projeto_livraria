@@ -8,7 +8,8 @@ namespace ProjetoLivraria.Models
     [Serializable]
     public class Livros
     {
-        public Livros(decimal liv_id_livro, decimal liv_id_tipo_livro, decimal liv_id_editor, string liv_nm_titulo, decimal liv_vl_preco, decimal liv_pc_royalty, string liv_ds_resumo, int liv_nu_edicao)
+        public Livros(decimal liv_id_livro, decimal liv_id_tipo_livro, decimal liv_id_editor, string liv_nm_titulo, 
+            decimal liv_vl_preco, decimal liv_pc_royalty, string liv_ds_resumo, int liv_nu_edicao)
         {
             this.liv_id_livro = liv_id_livro;
             this.liv_id_tipo_livro = liv_id_tipo_livro;

@@ -5,8 +5,10 @@ using System.Web;
 
 namespace ProjetoLivraria.Models
 {
+    [Serializable]
     public class Editores
     {
+        
         public decimal edi_id_editor { get; set; }
         public string edi_nm_editor { get; set; }
         public string edi_ds_email { get; set; }
