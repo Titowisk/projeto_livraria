@@ -251,6 +251,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="DAO\AutoresDAO.cs" />
+    <Compile Include="DAO\LivroAutorDAO.cs" />
     <Compile Include="DAO\TipoLivroDAO.cs" />
     <Compile Include="DAO\EditoresDAO.cs" />
     <Compile Include="DAO\LivrosDAO.cs" />

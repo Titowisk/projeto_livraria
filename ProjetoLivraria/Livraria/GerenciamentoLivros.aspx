@@ -46,6 +46,40 @@
                 </td>
                 
             </tr>
+             <tr style="display: grid;">
+                <%-- Editor Livro DropDown List --%>
+                <td>
+                    <asp:Label ID="lblCadastroEditorLivro" Text="Editor: " runat="server" />
+                </td>
+                <td>
+                    <%-- carregar categorias existentes aqui quando a página carregar --%>
+                    <asp:DropDownList ID="ddlCadastroEditorLivro" runat="server">
+                        <asp:ListItem Selected="True" Value="" Text="-" />
+                        <%--<asp:ListItem Text="editor1" />
+                        <asp:ListItem Text="editor2" />--%>
+                    </asp:DropDownList>
+                    <asp:RequiredFieldValidator ErrorMessage="Escolha um editor para o livro!" ControlToValidate="ddlCadastroEditorLivro" runat="server" 
+                        Style="color: red;"/>
+                </td>
+                
+            </tr>
+             <tr style="display: grid;">
+                <%-- Autor Livro DropDown List --%>
+                <td>
+                    <asp:Label ID="lblCadastroAutorLivro" Text="Autor: " runat="server" />
+                </td>
+                <td>
+                    <%-- carregar categorias existentes aqui quando a página carregar --%>
+                    <asp:DropDownList ID="ddlCadastroAutorLivro" runat="server">
+                        <asp:ListItem Selected="True" Value="" Text="-" />
+                        <%--<asp:ListItem Text="autor1" />
+                        <asp:ListItem Text="autor2" />--%>
+                    </asp:DropDownList>
+                    <asp:RequiredFieldValidator ErrorMessage="Escolha um Autor para o livro!" ControlToValidate="ddlCadastroAutorLivro" runat="server" 
+                        Style="color: red;"/>
+                </td>
+                
+            </tr>
             <tr style="display: grid;">
                 <%-- Preço Livro --%>
                 <td>
@@ -72,22 +106,7 @@
                 </td>
                 
             </tr>
-            <tr style="display: grid;">
-                <%-- Editor Livro DropDown List --%>
-                <td>
-                    <asp:Label ID="lblCadastroEditorLivro" Text="Editor: " runat="server" />
-                </td>
-                <td>
-                    <%-- carregar categorias existentes aqui quando a página carregar --%>
-                    <asp:DropDownList ID="ddlCadastroEditorLivro" runat="server">
-                        <asp:ListItem Text="editor1" />
-                        <asp:ListItem Text="editor2" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ErrorMessage="Escolha um editor para o livro!" ControlToValidate="ddlCadastroEditorLivro" runat="server" 
-                        Style="color: red;"/>
-                </td>
-                
-            </tr>
+           
             <tr style="display: grid;">
                 <%-- Edição Numero Livro --%>
                 <td>

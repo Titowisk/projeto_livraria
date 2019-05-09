@@ -67,6 +67,42 @@ namespace ProjetoLivraria.Livraria {
         protected global::System.Web.UI.WebControls.DropDownList ddlCadastroCategoriaLivro;
         
         /// <summary>
+        /// lblCadastroEditorLivro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCadastroEditorLivro;
+        
+        /// <summary>
+        /// ddlCadastroEditorLivro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCadastroEditorLivro;
+        
+        /// <summary>
+        /// lblCadastroAutorLivro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCadastroAutorLivro;
+        
+        /// <summary>
+        /// ddlCadastroAutorLivro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCadastroAutorLivro;
+        
+        /// <summary>
         /// lblCadastroPrecoLivro control.
         /// </summary>
         /// <remarks>
@@ -101,24 +137,6 @@ namespace ProjetoLivraria.Livraria {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbxCadastroRoyaltyLivro;
-        
-        /// <summary>
-        /// lblCadastroEditorLivro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCadastroEditorLivro;
-        
-        /// <summary>
-        /// ddlCadastroEditorLivro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCadastroEditorLivro;
         
         /// <summary>
         /// lblCadastroNumeroEdicaoLivro control.

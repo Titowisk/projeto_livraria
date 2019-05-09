@@ -5,6 +5,7 @@ using System.Web;
 
 namespace ProjetoLivraria.Models
 {
+    [Serializable]
     public class LivroAutor
     {
         public LivroAutor(decimal lia_id_autor, decimal lia_id_livro, decimal lia_pc_royalty)
