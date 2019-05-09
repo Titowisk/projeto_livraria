@@ -76,17 +76,21 @@ namespace ProjetoLivraria.Livraria
             {
                 // carregar editores 
                 this.CarregaEditores();
-                CarregaDropDownListEditor();
+                //CarregaDropDownListEditor();
+                CarregaDropDownList(ddlCadastroEditorLivro, "EditorNome", "EditorId", CreateEditorDataSource);
 
                 // carregar categorias
                 this.CarregaCategorias();
-                CarregaDropDownListCategoria();
+                //CarregaDropDownListCategoria();
+                CarregaDropDownList(ddlCadastroCategoriaLivro, "TipoLivroDescricao", "TipoLivroId", CreateCategoriaDataSource);
 
                 // carregar autores
                 this.CarregaAutores();
-                CarregaDropDownListAutor();
+                //CarregaDropDownListAutor();
+                CarregaDropDownList(ddlCadastroAutorLivro, "AutorNome", "AutorId", CreateAutorDataSource);
+
                 // carrega lista de livros
-                               
+
             }
 
           
@@ -121,51 +125,18 @@ namespace ProjetoLivraria.Livraria
             this.ListaAutores = ioAutoresDAO.BuscaAutores();
         }
 
-        private void CarregaDropDownListEditor()
+        private void CarregaDropDownList(DropDownList dropDownListObj, string TextFieldName, string ValueFieldName, Func<ICollection> CreateDataSource)
         {
             // cria o data source que irá alimentar o DropDownList de Editores
-            ddlCadastroEditorLivro.DataSource = CreateEditorDataSource();
-            ddlCadastroEditorLivro.DataTextField = "EditorNome"; // valor mostrado
-            ddlCadastroEditorLivro.DataValueField = "EditorId"; // valor oculto
+            dropDownListObj.DataSource = CreateDataSource();
+            dropDownListObj.DataTextField = TextFieldName; // valor mostrado
+            dropDownListObj.DataValueField = ValueFieldName; // valor oculto
 
-            ddlCadastroEditorLivro.DataBind();
+            dropDownListObj.DataBind();
 
-            ddlCadastroEditorLivro.SelectedIndex = 0;
+            dropDownListObj.SelectedIndex = 0;
         }
-
         
-
-        // cria uma tabela que armazena valores que serão usados na DropDownList de Categoria
-        private void CarregaDropDownListCategoria()
-        {
-            // Specify the data source and field names for the Text 
-            // and Value properties of the items (ListItem objects) 
-            // in the DropDownList control.
-            ddlCadastroCategoriaLivro.DataSource = CreateCategoriaDataSource();
-            ddlCadastroCategoriaLivro.DataTextField = "TipoLivroDescricao";
-            ddlCadastroCategoriaLivro.DataValueField = "TipoLivroId";
-
-            // Bind the data to the control.
-            ddlCadastroCategoriaLivro.DataBind();
-
-            // Set the default selected item, if desired.
-            ddlCadastroCategoriaLivro.SelectedIndex = 0;
-
-        }
-
-        private void CarregaDropDownListAutor()
-        {
-            // cria o data source que irá alimentar o DropDownList de Autores
-            ddlCadastroAutorLivro.DataSource = CreateAutorDataSource();
-            ddlCadastroAutorLivro.DataTextField = "AutorNome";
-            ddlCadastroAutorLivro.DataValueField = "AutorId";
-
-            // Bind the data to the control.
-            ddlCadastroAutorLivro.DataBind();
-
-            // Set the default selected item, if desired.
-            ddlCadastroAutorLivro.SelectedIndex = 0;
-        }
 
         private ICollection CreateEditorDataSource()
         {
