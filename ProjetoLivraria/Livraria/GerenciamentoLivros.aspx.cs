@@ -97,6 +97,10 @@ namespace ProjetoLivraria.Livraria
         {
             // carrega uma lista de livros
             this.ListaLivros = ioLivrosDAO.BuscaLivros();
+
+            // carrega o gridview de livros
+            gvGerenciamentoLivros.DataSource = ListaLivros.OrderBy(livro => livro.liv_nm_titulo);
+            gvGerenciamentoLivros.DataBind();
         }
 
         private void CarregaCategorias ()
@@ -239,8 +243,6 @@ namespace ProjetoLivraria.Livraria
 
         }
 
-        
-
         public void BtnNovoLivro_Click (object sender, EventArgs e)
         {
             // botão para submeter o formulário e assim criar um novo livro
@@ -282,6 +284,34 @@ namespace ProjetoLivraria.Livraria
                 HttpContext.Current.Response.Write("<script>console.log('Erro no cadastro do Livro!');</script>");
                 throw;
             }
+        }
+
+        protected void gvGerenciamentoLivros_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            
+        }
+
+        protected void gvGerenciamentoLivros_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            gvGerenciamentoLivros.EditIndex = e.NewEditIndex;
+            CarregaDados();
+            // carregar as dropdown lists de cada modelo (autor, categoria e editor) para edição
+            
+        }
+
+        protected void gvGerenciamentoLivros_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
+
+        protected void gvGerenciamentoLivros_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void gvGerenciamentoLivros_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
         }
 
         // após criar a gridView, criar os métodos de edit, update e delete

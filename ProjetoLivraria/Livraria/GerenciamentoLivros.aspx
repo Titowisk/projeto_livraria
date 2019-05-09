@@ -127,6 +127,139 @@
             </tr>            
         </table>
     </div>
+    <div class="row">
+        <h2 style="text-align: center;">Lista de Livros Cadastrados</h2>
+        <asp:GridView ID="gvGerenciamentoLivros" Width="100%" AutoGenerateColumns="false" Font-Size="14px" CellPadding="4" 
+            ForeColor="#333333" GridLines="None" OnRowCancelingEdit="gvGerenciamentoLivros_RowCancelingEdit" 
+            OnRowEditing="gvGerenciamentoLivros_RowEditing" OnRowUpdating="gvGerenciamentoLivros_RowUpdating"
+            OnRowDeleting="gvGerenciamentoLivros_RowDeleting" OnRowCommand="gvGerenciamentoLivros_RowCommand" runat="server">
+            <Columns>
+                <asp:TemplateField Visible="false">
+                    <%-- ID livro --%>
+                    <EditItemTemplate>
+                        <asp:Label ID="lblEditIdLivro" Text='<%# Eval("liv_id_livro") %>' runat="server" />
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextIdLivro" runat="server" Text="ID"></asp:Label>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblIdLivro" runat="server" Text='<%# Eval("liv_id_livro") %>'></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Center" Width="50px" />
+                    <ItemStyle HorizontalAlign="Center" />
+                </asp:TemplateField>
+                <%-- Titulo Livro --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="tbxEditTituloLivro" runat="server" CssClass="form-control" Height="35px" MaxLength="20" 
+                            Text='<%# Eval("liv_nm_titulo") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoTituloLivro" runat="server" Style="text-align: center;" Text="Título"></asp:Label>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblTituloLivro" runat="server" Style="text-align: left;" Text='<%# Eval("liv_nm_titulo") %>'></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="150px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
+                <%-- Id TipoLivro (oculto) --%>
+
+                <%-- DropDownList Categoria (TipoLivro) --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="ddlEditCategoriaLivro" runat="server"  CssClass="form-control" Height="35px" MaxLength="20">
+                            <%-- serão carregadas opções com texto= nome da categoria e valor = id da categoria --%>
+                            <asp:ListItem Text="Cat1" />
+                            <asp:ListItem Text="Cat2" />
+                        </asp:DropDownList>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoCategoriaLivro" Style="text-align: center;" Text="Categoria" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblCategoriaLivro" Text='<%# Eval("til_ds_descricao") %>' runat="server" />
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="100px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
+
+                <%-- Id Editor (oculto) --%>
+
+                <%-- DropDownList Editor --%>
+
+                <%-- Id Autor (oculto) --%>
+
+                <%-- DropDownList Autor --%>
+
+                <%-- Preço --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="tbxEditPrecoLivro" runat="server" CssClass="form-control" Height="35px" MaxLength="20" 
+                            Text='<%# Eval("liv_vl_preco") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoPrecoLivro" runat="server" Style="text-align: center;" Text="Preço"></asp:Label>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblPrecoLivro" runat="server" Style="text-align: left;" Text='<%# Eval("liv_vl_preco") %>'></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="50px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
+
+                <%-- PC Royalty --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="tbxEditRoyaltyLivro" runat="server" CssClass="form-control" Height="35px" MaxLength="20" 
+                            Text='<%# Eval("liv_pc_royalty") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoRoyaltyLivro" runat="server" Style="text-align: center;" Text="Royalties"></asp:Label>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblRoyaltyLivro" runat="server" Style="text-align: left;" Text='<%# Eval("liv_pc_royalty") %>'></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="50px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
+
+                <%-- Resumo --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="tbxEditResumoLivro" runat="server" CssClass="form-control" Height="35px" MaxLength="20" 
+                            Text='<%# Eval("liv_ds_resumo") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoResumoLivro" runat="server" Style="text-align: center;" Text="Resumo"></asp:Label>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblResumoLivro" runat="server" Style="text-align: left;" Text='<%# Eval("liv_ds_resumo") %>'></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="300px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
+
+                <%-- Numero Edição --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:TextBox ID="tbxEditNumeroEdicaoLivro" runat="server" CssClass="form-control" Height="35px" MaxLength="20" 
+                            Text='<%# Eval("liv_nu_edicao") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoNumeroEdicaoLivro" runat="server" Style="text-align: center;" Text="Nº Edição"></asp:Label>
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblNumeroEdicaoLivro" runat="server" Style="text-align: left;" Text='<%# Eval("liv_nu_edicao") %>'></asp:Label>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="50px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
+
+            </Columns>
+        </asp:GridView>
+
+    </div>
 </asp:Content>
 
 
