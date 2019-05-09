@@ -47,7 +47,7 @@
             OnRowEditing="gvGerenciamentoAutores_RowEditing" OnRowUpdating="gvGerenciamentoAutores_RowUpdating" 
             OnRowDeleting="gvGerenciamentoAutores_RowDeleting" OnRowCommand="gvGerenciamentoAutores_RowCommand">
             <Columns>
-                <asp:TemplateField>
+                <asp:TemplateField Visible="false">
                     <EditItemTemplate>
                         <asp:Label ID="lblEditIdAutor" runat="server" Text='<%# Eval("aut_id_autor") %>'></asp:Label>
                     </EditItemTemplate>
