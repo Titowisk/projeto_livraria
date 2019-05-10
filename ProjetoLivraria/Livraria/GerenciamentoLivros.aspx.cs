@@ -90,7 +90,7 @@ namespace ProjetoLivraria.Livraria
                 CarregaDropDownList(ddlCadastroAutorLivro, "AutorNome", "AutorId", CreateAutorDataSource);
 
                 // carrega lista de livros
-
+                this.CarregaDados();
             }
 
           
@@ -105,6 +105,8 @@ namespace ProjetoLivraria.Livraria
             // carrega o gridview de livros
             gvGerenciamentoLivros.DataSource = ListaLivros.OrderBy(livro => livro.liv_nm_titulo);
             gvGerenciamentoLivros.DataBind();
+
+           
         }
 
         private void CarregaCategorias ()
@@ -259,7 +261,8 @@ namespace ProjetoLivraria.Livraria
 
         protected void gvGerenciamentoLivros_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            
+            this.gvGerenciamentoLivros.EditIndex = -1;
+            this.CarregaDados();
         }
 
         protected void gvGerenciamentoLivros_RowEditing(object sender, GridViewEditEventArgs e)
@@ -267,11 +270,68 @@ namespace ProjetoLivraria.Livraria
             gvGerenciamentoLivros.EditIndex = e.NewEditIndex;
             CarregaDados();
             // carregar as dropdown lists de cada modelo (autor, categoria e editor) para edição
-            
+            // categoria
+            DropDownList gvDropDownListCategoria = (gvGerenciamentoLivros.Rows[e.NewEditIndex].FindControl("ddlEditCategoriaLivro") as DropDownList);
+            CarregaDropDownList(gvDropDownListCategoria, "TipoLivroDescricao", "TipoLivroId", CreateCategoriaDataSource);
+
+            // autor
+            DropDownList gvDropDownListAutor = (gvGerenciamentoLivros.Rows[e.NewEditIndex].FindControl("ddlEditAutorLivro") as DropDownList);
+            CarregaDropDownList(gvDropDownListAutor, "AutorNome", "AutorId", CreateAutorDataSource);
+
+            // editor
+            DropDownList gvDropDownListEditor = (gvGerenciamentoLivros.Rows[e.NewEditIndex].FindControl("ddlEditEditorLivro") as DropDownList);
+            CarregaDropDownList(gvDropDownListEditor, "EditorNome", "EditorId", CreateEditorDataSource);
+
         }
 
         protected void gvGerenciamentoLivros_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            var currentRow = gvGerenciamentoLivros.Rows[e.RowIndex];
+            // pegar os valores colocados pelo usuário
+            //liv_id_livro
+            string idLivro = (currentRow.FindControl("lblIdLivro") as Label).Text;
+            decimal ldcIdLivro = Convert.ToDecimal(idLivro);
+            //liv_id_tipo_livro
+            decimal ldcIdTipoLivro = Convert.ToDecimal((currentRow.FindControl("ddlEditCategoriaLivro") as DropDownList).SelectedItem.Value);
+            //liv_id_editor
+            decimal ldcIdEditor = Convert.ToDecimal((currentRow.FindControl("ddlEditEditorLivro") as DropDownList).SelectedItem.Value);
+            // autor
+            decimal ldcIdAutor = Convert.ToDecimal((currentRow.FindControl("ddlEditAutorLivro") as DropDownList).SelectedItem.Value);
+            //liv_nm_titulo
+            string lsTituloLivro = (currentRow.FindControl("lblTituloLivro") as Label).Text;
+            //liv_vl_preco 
+            decimal lsPrecoLivro = Convert.ToDecimal((currentRow.FindControl("lblPrecoLivro") as Label).Text);
+            //liv_pc_royalty 
+            decimal lsRoyaltyLivro = Convert.ToDecimal((currentRow.FindControl("lblRoyaltyLivro") as Label).Text);
+            //liv_ds_resumo 
+            string lsResumoLivro = (currentRow.FindControl("lblResumoLivro") as Label).Text;
+            //liv_nu_edicao
+            int lsNuEdicaoLivro = Convert.ToInt32((currentRow.FindControl("lblNumeroEdicaoLivro") as Label).Text);
+            
+            // verificar se há algum valor nulo
+            if (String.IsNullOrWhiteSpace(lsTituloLivro))
+                HttpContext.Current.Response.Write("<script>alert('Digite o titulo do Livro.')</script>");
+            else if (String.IsNullOrWhiteSpace(lsResumoLivro))
+                HttpContext.Current.Response.Write("<script>alert('Digite o resumo do Livro.')</script>");
+            else if (lsNuEdicaoLivro.Equals(0))
+                HttpContext.Current.Response.Write("<script>alert('Numero de edição do Livro não pode ser 0')</script>");
+            else
+            {
+                // atualizar o objeto no banco de dados
+                try
+                {
+                    Livros loLivro = new Livros(ldcIdLivro, ldcIdTipoLivro, ldcIdEditor, lsTituloLivro, lsPrecoLivro, lsRoyaltyLivro, lsResumoLivro, lsNuEdicaoLivro);
+                    LivroAutor loLivroAutor = new LivroAutor(ldcIdAutor, ldcIdLivro, lsRoyaltyLivro);
+                    ioLivrosDAO.AtualizaLivro(loLivro);
+                    ioLivroAutorDAO.AtualizaLivroAutor(loLivroAutor);
+                }
+                catch (Exception)
+                {
+                    HttpContext.Current.Response.Write("<script>alert('Erro na atualização do livro.')</script>");
+                }
+            }
+
+
 
         }
 
