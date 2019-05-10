@@ -170,15 +170,15 @@
                     <EditItemTemplate>
                         <asp:DropDownList ID="ddlEditCategoriaLivro" runat="server"  CssClass="form-control" Height="35px" MaxLength="20">
                             <%-- serão carregadas opções com texto= nome da categoria e valor = id da categoria --%>
-                            <asp:ListItem Text="Cat1" />
-                            <asp:ListItem Text="Cat2" />
+                            <%--<asp:ListItem Text="Cat1" />
+                            <asp:ListItem Text="Cat2" />--%>
                         </asp:DropDownList>
                     </EditItemTemplate>
                     <HeaderTemplate>
                         <asp:Label ID="lblTextoCategoriaLivro" Style="text-align: center;" Text="Categoria" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblCategoriaLivro" Text='<%# Eval("til_ds_descricao") %>' runat="server" />
+                        <asp:Label ID="lblCategoriaLivro" Text='<%# Eval("liv_id_tipo_livro") %>' runat="server" />
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Left" Width="100px"></HeaderStyle>
                     <ItemStyle HorizontalAlign="Left"></ItemStyle>
@@ -187,10 +187,44 @@
                 <%-- Id Editor (oculto) --%>
 
                 <%-- DropDownList Editor --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="ddlEditEditorLivro" runat="server"  CssClass="form-control" Height="35px" MaxLength="20">
+                            <%-- serão carregadas opções com texto= nome da categoria e valor = id da categoria --%>
+                            <%--<asp:ListItem Text="Cat1" />
+                            <asp:ListItem Text="Cat2" />--%>
+                        </asp:DropDownList>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoEditorLivro" Style="text-align: center;" Text="Editor" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblEditorLivro" Text='<%# Eval("liv_id_editor") %>' runat="server" />
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="100px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
 
                 <%-- Id Autor (oculto) --%>
 
                 <%-- DropDownList Autor --%>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="ddlEditAutorLivro" runat="server"  CssClass="form-control" Height="35px" MaxLength="20">
+                            <%-- serão carregadas opções com texto= nome da categoria e valor = id da categoria --%>
+                            <%--<asp:ListItem Text="Cat1" />
+                            <asp:ListItem Text="Cat2" />--%>
+                        </asp:DropDownList>
+                    </EditItemTemplate>
+                    <HeaderTemplate>
+                        <asp:Label ID="lblTextoAutorLivro" Style="text-align: center;" Text="Autor" runat="server" />
+                    </HeaderTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblAutorLivro" Text='ToDo' runat="server" />
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Left" Width="100px"></HeaderStyle>
+                    <ItemStyle HorizontalAlign="Left"></ItemStyle>
+                </asp:TemplateField>
 
                 <%-- Preço --%>
                 <asp:TemplateField>
@@ -255,8 +289,32 @@
                     <HeaderStyle HorizontalAlign="Left" Width="50px"></HeaderStyle>
                     <ItemStyle HorizontalAlign="Left"></ItemStyle>
                 </asp:TemplateField>
+                <asp:TemplateField>
+                    <EditItemTemplate>
+                        <asp:Button ID="btnUpdate" runat="server" CommandName="Update" CssClass="btn btn-success" Text="Atualizar"
+                            CausesValidation="false"/>
+                        <asp:Button Text="Cancelar" ID="btnCancelar" CommandName="Cancel" CssClass="btn btn-danger" runat="server" 
+                            CausesValidation="false"/>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Button Text="Editar" ID="Button1" CommandName="Edit" CausesValidation="false" runat="server" CssClass="btn btn-success"/>
+                        <asp:Button Text="Deletar" ID="btnDeletarLivro" CommandName="Delete" CausesValidation="false" runat="server" CssClass="btn btn-danger"/>
+                    </ItemTemplate>
+                    <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
+                </asp:TemplateField>
 
             </Columns>
+            <AlternatingRowStyle BackColor="White" />
+            <EditRowStyle BackColor="#2461BF" Font-Size="14px"/>
+            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle HorizontalAlign="Center" Wrap="True" BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle HorizontalAlign="Center" BackColor="#EFF3FB" />
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" Font-Size="14px"/>
+            <SortedAscendingCellStyle BackColor="#F5F7FB" />
+            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+            <SortedDescendingCellStyle BackColor="#E9EBEF" />
+            <SortedDescendingHeaderStyle BackColor="#4870BE" />
         </asp:GridView>
 
     </div>
