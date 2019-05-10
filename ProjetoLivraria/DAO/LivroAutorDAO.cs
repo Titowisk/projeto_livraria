@@ -45,5 +45,37 @@ namespace ProjetoLivraria.DAO
 
             return liQtdRegistrosInseridos;
         }
+
+        public int AtualizaLivroAutor(LivroAutor aoLivroAutor)
+        {
+            int liQtdeRegistrosAtualizados = 0;
+            if (aoLivroAutor == null) throw new NullReferenceException();
+
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+            {
+                try
+                {
+                    ioConexao.Open();
+                    // como o autor é trocado a partir do livro
+                    // então o id do livro serve para definir qual livro terá sua relação
+                    // com autor trocada
+                    ioQuery = new SqlCommand(
+                        @"UPDATE LIA_LIVRO_AUTOR
+                            SET LIA_ID_AUTOR = @idAutor, LIA_PC_ROYALTY = @royaltyLivro
+                            WHERE LIA_ID_LIVRO = @idLivro",
+                        ioConexao);
+                    ioQuery.Parameters.Add(new SqlParameter("@idAutor", aoLivroAutor.lia_id_autor));
+                    ioQuery.Parameters.Add(new SqlParameter("@idLivro", aoLivroAutor.lia_id_livro));
+                    ioQuery.Parameters.Add(new SqlParameter("@royaltyLivro", aoLivroAutor.lia_pc_royalty));
+                    liQtdeRegistrosAtualizados = ioQuery.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return liQtdeRegistrosAtualizados;
+        }
     }
 }

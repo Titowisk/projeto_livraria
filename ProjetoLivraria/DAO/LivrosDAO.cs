@@ -145,12 +145,13 @@ namespace ProjetoLivraria.DAO
         public int AtualizaLivro(Livros aoLivro)
         {
             var liQtdRegistrosAtualizados = 0;
-            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStrings"].ConnectionString))
+            if (aoLivro == null) throw new NullReferenceException();
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
             {
                 try
                 {
                     ioConexao.Open();
-                    if (aoLivro == null) throw new NullReferenceException();
+                    
                     ioQuery = new SqlCommand($@"UPDATE LIV_LIVROS 
                                             SET @idTipoLivro = {_id_tipo_livro}, @idEditor = {_id_editor}, @tituloLivro = {_titulo}, 
                                             @precoLivro = {_preco}, @royaltyLivro = {_royalty}, @resumoLivro = {_resumo}, 
@@ -171,7 +172,7 @@ namespace ProjetoLivraria.DAO
                 catch (Exception)
                 {
 
-                    throw new Exception("Não foi possível enserir livro.");
+                    throw new Exception("Não foi possível inserir livro.");
                 }
             }
             return liQtdRegistrosAtualizados;
