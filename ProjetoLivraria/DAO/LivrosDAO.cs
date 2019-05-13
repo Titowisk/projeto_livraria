@@ -33,13 +33,33 @@ namespace ProjetoLivraria.DAO
                     ioConexao.Open();
                     if ( adcIdLivro != null)
                     {
-                        ioQuery = new SqlCommand($"SELECT * FROM LIV_LIVROS WHERE {_id} = @idLivros", ioConexao);
+                        ioQuery = new SqlCommand(
+                            $@"SELECT
+                            liv_id_livro, liv_id_tipo_livro, liv_id_editor, liv_nm_titulo, liv_vl_preco,
+                            liv_pc_royalty, liv_ds_resumo, liv_nu_edicao,
+                            til_ds_descricao, edi_nm_editor, aut_nm_nome
+                            FROM LIV_LIVROS WHERE {_id} = @idLivros
+                            INNER JOIN EDI_EDITORES ON LIV_ID_EDITOR = EDI_ID_EDITOR
+                            INNER JOIN TIL_TIPO_LIVRO ON LIV_ID_TIPO_LIVRO = TIL_ID_TIPO_LIVRO
+                            INNER JOIN LIA_LIVRO_AUTOR ON LIV_ID_LIVRO = LIA_ID_LIVRO
+                            INNER JOIN AUT_AUTORES ON LIA_ID_AUTOR = AUT_ID_AUTOR",
+                            ioConexao);
                         ioQuery.Parameters.Add(new SqlParameter("@idLivros", adcIdLivro));
 
                     }
                     else
                     {
-                        ioQuery = new SqlCommand($"SELECT * FROM LIV_LIVROS", ioConexao);
+                        ioQuery = new SqlCommand(
+                            $@"SELECT 
+                            liv_id_livro, liv_id_tipo_livro, liv_id_editor, liv_nm_titulo, liv_vl_preco,
+                            liv_pc_royalty, liv_ds_resumo, liv_nu_edicao,
+                            til_ds_descricao, edi_nm_editor, aut_nm_nome
+                            FROM LIV_LIVROS
+                            INNER JOIN EDI_EDITORES ON LIV_ID_EDITOR = EDI_ID_EDITOR
+                            INNER JOIN TIL_TIPO_LIVRO ON LIV_ID_TIPO_LIVRO = TIL_ID_TIPO_LIVRO
+                            INNER JOIN LIA_LIVRO_AUTOR ON LIV_ID_LIVRO = LIA_ID_LIVRO
+                            INNER JOIN AUT_AUTORES ON LIA_ID_AUTOR = AUT_ID_AUTOR",
+                            ioConexao);
                     }
                     using (SqlDataReader loReader = ioQuery.ExecuteReader())
                     {
@@ -48,7 +68,8 @@ namespace ProjetoLivraria.DAO
                             ioListLivros.Add(new Livros(
                                 loReader.GetDecimal(0), loReader.GetDecimal(1), loReader.GetDecimal(2),
                                 loReader.GetString(3), loReader.GetDecimal(4), loReader.GetDecimal(5),
-                                loReader.GetString(6), loReader.GetInt32(7)
+                                loReader.GetString(6), loReader.GetInt32(7), 
+                                loReader.GetString(8), loReader.GetString(9), loReader.GetString(10) // categoria, editor, autor
                                 ));
                         }
                     }
@@ -153,10 +174,10 @@ namespace ProjetoLivraria.DAO
                     ioConexao.Open();
                     
                     ioQuery = new SqlCommand($@"UPDATE LIV_LIVROS 
-                                            SET @idTipoLivro = {_id_tipo_livro}, @idEditor = {_id_editor}, @tituloLivro = {_titulo}, 
-                                            @precoLivro = {_preco}, @royaltyLivro = {_royalty}, @resumoLivro = {_resumo}, 
-                                            @edicaoLivro = {_edicao}
-                                            WHERE @idLivro = {_id}");
+                                            SET {_id_tipo_livro} = @idTipoLivro, {_id_editor} = @idEditor, {_titulo} = @tituloLivro, 
+                                            @precoLivro = {_preco}, {_royalty} = @royaltyLivro, {_resumo} = @resumoLivro, 
+                                            {_edicao} = @edicaoLivro
+                                            WHERE {_id} = @idLivro", ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idLivro", aoLivro.liv_id_livro));
                     ioQuery.Parameters.Add(new SqlParameter("@idTipoLivro", aoLivro.liv_id_tipo_livro));
                     ioQuery.Parameters.Add(new SqlParameter("@idEditor", aoLivro.liv_id_editor));
@@ -172,7 +193,7 @@ namespace ProjetoLivraria.DAO
                 catch (Exception)
                 {
 
-                    throw new Exception("Não foi possível inserir livro.");
+                    throw;
                 }
             }
             return liQtdRegistrosAtualizados;
@@ -186,7 +207,7 @@ namespace ProjetoLivraria.DAO
                 try
                 {
                     ioConexao.Open();
-                    ioQuery = new SqlCommand($@"DELETE FROM LIV_LIVROS WHERE {_id} = @idLivro");
+                    ioQuery = new SqlCommand($@"DELETE FROM LIV_LIVROS WHERE {_id} = @idLivro", ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idLivro", aoLivro.liv_id_livro));
                     liQtdRegistrosDeletados = ioQuery.ExecuteNonQuery();
                 }
