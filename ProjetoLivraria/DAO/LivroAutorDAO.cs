@@ -62,7 +62,7 @@ namespace ProjetoLivraria.DAO
                     ioQuery = new SqlCommand(
                         @"UPDATE LIA_LIVRO_AUTOR
                             SET LIA_ID_AUTOR = @idAutor, LIA_PC_ROYALTY = @royaltyLivro
-                            WHERE LIA_ID_LIVRO = @idLivro",
+                            WHERE LIA_ID_LIVRO = @idLivro AND LIA_ID_AUTOR = @idAutor", // atualiza somente aquela relação
                         ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idAutor", aoLivroAutor.lia_id_autor));
                     ioQuery.Parameters.Add(new SqlParameter("@idLivro", aoLivroAutor.lia_id_livro));
@@ -71,11 +71,39 @@ namespace ProjetoLivraria.DAO
                 }
                 catch (Exception)
                 {
+                    HttpContext.Current.Response.Write("<script>alert('Erro na remoção dos relacionamentos do livro.');</script>");
 
-                    throw;
                 }
             }
             return liQtdeRegistrosAtualizados;
+        }
+
+        public int DeletaLivroAutor(Livros aoLivro)
+        {
+            // Apaga todos os relacionamentos de autor-livro que envolvam o livro escolhido
+            int liQtdeRegistrosDeletados = 0;
+            if (aoLivro == null) throw new NullReferenceException();
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+            {
+                try
+                {
+                    ioConexao.Open();
+                    
+                    ioQuery = new SqlCommand(
+                        @"DELETE FROM LIA_LIVRO_AUTOR
+                            WHERE LIA_ID_LIVRO = @idLivro",
+                        ioConexao);
+                    ioQuery.Parameters.Add(new SqlParameter("@idLivro", aoLivro.liv_id_livro));
+                    liQtdeRegistrosDeletados = ioQuery.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    HttpContext.Current.Response.Write("<script>alert('Erro na remoção dos relacionamentos do livro.');</script>");
+                    
+                }
+            }
+
+            return liQtdeRegistrosDeletados;
         }
     }
 }
