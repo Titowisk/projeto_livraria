@@ -178,7 +178,7 @@
                         <asp:Label ID="lblTextoCategoriaLivro" Style="text-align: center;" Text="Categoria" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblCategoriaLivro" Text='<%# Eval("liv_id_tipo_livro") %>' runat="server" />
+                        <asp:Label ID="lblCategoriaLivro" Text='<%# Eval("til_ds_descricao") %>' runat="server" />
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Left" Width="100px"></HeaderStyle>
                     <ItemStyle HorizontalAlign="Left"></ItemStyle>
@@ -199,7 +199,7 @@
                         <asp:Label ID="lblTextoEditorLivro" Style="text-align: center;" Text="Editor" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblEditorLivro" Text='<%# Eval("liv_id_editor") %>' runat="server" />
+                        <asp:Label ID="lblEditorLivro" Text='<%# Eval("edi_nm_editor") %>' runat="server" />
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Left" Width="100px"></HeaderStyle>
                     <ItemStyle HorizontalAlign="Left"></ItemStyle>
@@ -220,7 +220,7 @@
                         <asp:Label ID="lblTextoAutorLivro" Style="text-align: center;" Text="Autor" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblAutorLivro" Text='ToDo' runat="server" />
+                        <asp:Label ID="lblAutorLivro" Text='<%# Eval("aut_nm_nome") %>' runat="server" />
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Left" Width="100px"></HeaderStyle>
                     <ItemStyle HorizontalAlign="Left"></ItemStyle>

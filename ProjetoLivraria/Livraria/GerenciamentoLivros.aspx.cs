@@ -92,7 +92,6 @@ namespace ProjetoLivraria.Livraria
                 // carrega lista de livros
                 this.CarregaDados();
             }
-
           
             
         }
@@ -106,7 +105,6 @@ namespace ProjetoLivraria.Livraria
             gvGerenciamentoLivros.DataSource = ListaLivros.OrderBy(livro => livro.liv_nm_titulo);
             gvGerenciamentoLivros.DataBind();
 
-           
         }
 
         private void CarregaCategorias ()
@@ -244,12 +242,12 @@ namespace ProjetoLivraria.Livraria
                 // Cria o livro no banco de dados (com editor e tipolivro)
                 Livros loLivro = new Models.Livros(ldcIdLivro, ldcIdTipoLivro, ldcIdEditor, lsTituloLivro,
                     lsPrecoLivro, lsRoyaltyLivro, lsResumoLivro, lsNumeroEdicaoLivro);
-                this.CarregaDados();
                 ioLivrosDAO.InsereLivro(loLivro);
                 // cria a relação de autor com livro em LIA_AUTOR_LIVRO
                 LivroAutor loLivroAutor = new LivroAutor(ldcIdAutor, ldcIdLivro, lsRoyaltyLivro);
                 ioLivroAutorDAO.InsereLivroAutor(loLivroAutor);
 
+                this.CarregaDados();
                 HttpContext.Current.Response.Write("<script>alert('Livro cadastrado com sucesso!');</script>");
             }
             catch (Exception ex)
@@ -289,7 +287,7 @@ namespace ProjetoLivraria.Livraria
             var currentRow = gvGerenciamentoLivros.Rows[e.RowIndex];
             // pegar os valores colocados pelo usuário
             //liv_id_livro
-            string idLivro = (currentRow.FindControl("lblIdLivro") as Label).Text;
+            string idLivro = (currentRow.FindControl("lblEditIdLivro") as Label).Text;
             decimal ldcIdLivro = Convert.ToDecimal(idLivro);
             //liv_id_tipo_livro
             decimal ldcIdTipoLivro = Convert.ToDecimal((currentRow.FindControl("ddlEditCategoriaLivro") as DropDownList).SelectedItem.Value);
@@ -298,15 +296,15 @@ namespace ProjetoLivraria.Livraria
             // autor
             decimal ldcIdAutor = Convert.ToDecimal((currentRow.FindControl("ddlEditAutorLivro") as DropDownList).SelectedItem.Value);
             //liv_nm_titulo
-            string lsTituloLivro = (currentRow.FindControl("lblTituloLivro") as Label).Text;
+            string lsTituloLivro = (currentRow.FindControl("tbxEditTituloLivro") as TextBox).Text;
             //liv_vl_preco 
-            decimal lsPrecoLivro = Convert.ToDecimal((currentRow.FindControl("lblPrecoLivro") as Label).Text);
+            decimal lsPrecoLivro = Convert.ToDecimal((currentRow.FindControl("tbxEditPrecoLivro") as TextBox).Text);
             //liv_pc_royalty 
-            decimal lsRoyaltyLivro = Convert.ToDecimal((currentRow.FindControl("lblRoyaltyLivro") as Label).Text);
+            decimal lsRoyaltyLivro = Convert.ToDecimal((currentRow.FindControl("tbxEditRoyaltyLivro") as TextBox).Text);
             //liv_ds_resumo 
-            string lsResumoLivro = (currentRow.FindControl("lblResumoLivro") as Label).Text;
+            string lsResumoLivro = (currentRow.FindControl("tbxEditResumoLivro") as TextBox).Text;
             //liv_nu_edicao
-            int lsNuEdicaoLivro = Convert.ToInt32((currentRow.FindControl("lblNumeroEdicaoLivro") as Label).Text);
+            int lsNuEdicaoLivro = Convert.ToInt32((currentRow.FindControl("tbxEditNumeroEdicaoLivro") as TextBox).Text);
             
             // verificar se há algum valor nulo
             if (String.IsNullOrWhiteSpace(lsTituloLivro))
@@ -324,10 +322,16 @@ namespace ProjetoLivraria.Livraria
                     LivroAutor loLivroAutor = new LivroAutor(ldcIdAutor, ldcIdLivro, lsRoyaltyLivro);
                     ioLivrosDAO.AtualizaLivro(loLivro);
                     ioLivroAutorDAO.AtualizaLivroAutor(loLivroAutor);
+                    gvGerenciamentoLivros.EditIndex = -1;
+                    this.CarregaDados();
+                    HttpContext.Current.Response.Write("<script>alert('Autor atualizado com sucesso!');</script>");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     HttpContext.Current.Response.Write("<script>alert('Erro na atualização do livro.')</script>");
+                    HttpContext.Current.Response.Write($"<script>console.log('${ex.Message}')</script>");
+                    HttpContext.Current.Response.Write($"<script>console.log('${ex.StackTrace}')</script>");
+                    
                 }
             }
 
@@ -337,7 +341,26 @@ namespace ProjetoLivraria.Livraria
 
         protected void gvGerenciamentoLivros_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            decimal ldcIdLivro = Convert.ToDecimal((gvGerenciamentoLivros.Rows[e.RowIndex].FindControl("lblIdLivro") as Label).Text);
+            Livros ioLivro = ioLivrosDAO.BuscaLivros(ldcIdLivro).FirstOrDefault();
 
+            if (ioLivro != null)
+            {
+                try
+                {
+                    // apagar o livro
+                    ioLivrosDAO.DeletaLivro(ioLivro);
+                
+                    // apagar a relação do livro com outros autores
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
         }
 
         protected void gvGerenciamentoLivros_RowCommand(object sender, GridViewCommandEventArgs e)
