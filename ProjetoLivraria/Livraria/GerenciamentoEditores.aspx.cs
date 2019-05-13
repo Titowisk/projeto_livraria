@@ -13,5 +13,37 @@ namespace ProjetoLivraria.Livraria
         {
 
         }
+
+        protected void btnNovoEditor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void gvGerenciamentoEditores_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+
+        }
+
+        protected void gvGerenciamentoEditores_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+
+        }
+
+        protected void gvGerenciamentoEditores_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
+
+        protected void gvGerenciamentoEditores_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void gvGerenciamentoEditores_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+        }
+
+        
     }
 }
