@@ -324,7 +324,7 @@ namespace ProjetoLivraria.Livraria
                     ioLivroAutorDAO.AtualizaLivroAutor(loLivroAutor);
                     gvGerenciamentoLivros.EditIndex = -1;
                     this.CarregaDados();
-                    HttpContext.Current.Response.Write("<script>alert('Autor atualizado com sucesso!');</script>");
+                    HttpContext.Current.Response.Write("<script>alert('Livro atualizado com sucesso!');</script>");
                 }
                 catch (Exception ex)
                 {
@@ -341,7 +341,8 @@ namespace ProjetoLivraria.Livraria
 
         protected void gvGerenciamentoLivros_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            decimal ldcIdLivro = Convert.ToDecimal((gvGerenciamentoLivros.Rows[e.RowIndex].FindControl("lblIdLivro") as Label).Text);
+            var currentRow = gvGerenciamentoLivros.Rows[e.RowIndex];
+            decimal ldcIdLivro = Convert.ToDecimal((currentRow.FindControl("lblIdLivro") as Label).Text);
             Livros ioLivro = ioLivrosDAO.BuscaLivros(ldcIdLivro).FirstOrDefault();
 
             if (ioLivro != null)
@@ -350,14 +351,21 @@ namespace ProjetoLivraria.Livraria
                 {
                     // apagar o livro
                     ioLivrosDAO.DeletaLivro(ioLivro);
-                
+
                     // apagar a relação do livro com outros autores
+                    ioLivroAutorDAO.DeletaLivroAutor(ioLivro);
+
+                    gvGerenciamentoLivros.EditIndex = -1;
+                    this.CarregaDados();
+                    HttpContext.Current.Response.Write("<script>alert('Livro removido com sucesso!');</script>");
 
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    throw;
+                    HttpContext.Current.Response.Write("<script>alert('Erro na remoção do livro.')</script>");
+                    HttpContext.Current.Response.Write($"<script>console.log('${ex.Message}')</script>");
+                    HttpContext.Current.Response.Write($"<script>console.log('${ex.StackTrace}')</script>");
                 }
 
             }

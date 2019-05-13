@@ -38,11 +38,12 @@ namespace ProjetoLivraria.DAO
                             liv_id_livro, liv_id_tipo_livro, liv_id_editor, liv_nm_titulo, liv_vl_preco,
                             liv_pc_royalty, liv_ds_resumo, liv_nu_edicao,
                             til_ds_descricao, edi_nm_editor, aut_nm_nome
-                            FROM LIV_LIVROS WHERE {_id} = @idLivros
+                            FROM LIV_LIVROS 
                             INNER JOIN EDI_EDITORES ON LIV_ID_EDITOR = EDI_ID_EDITOR
                             INNER JOIN TIL_TIPO_LIVRO ON LIV_ID_TIPO_LIVRO = TIL_ID_TIPO_LIVRO
                             INNER JOIN LIA_LIVRO_AUTOR ON LIV_ID_LIVRO = LIA_ID_LIVRO
-                            INNER JOIN AUT_AUTORES ON LIA_ID_AUTOR = AUT_ID_AUTOR",
+                            INNER JOIN AUT_AUTORES ON LIA_ID_AUTOR = AUT_ID_AUTOR
+                            WHERE {_id} = @idLivros",
                             ioConexao);
                         ioQuery.Parameters.Add(new SqlParameter("@idLivros", adcIdLivro));
 
@@ -175,7 +176,7 @@ namespace ProjetoLivraria.DAO
                     
                     ioQuery = new SqlCommand($@"UPDATE LIV_LIVROS 
                                             SET {_id_tipo_livro} = @idTipoLivro, {_id_editor} = @idEditor, {_titulo} = @tituloLivro, 
-                                            @precoLivro = {_preco}, {_royalty} = @royaltyLivro, {_resumo} = @resumoLivro, 
+                                            {_preco} = @precoLivro, {_royalty} = @royaltyLivro, {_resumo} = @resumoLivro, 
                                             {_edicao} = @edicaoLivro
                                             WHERE {_id} = @idLivro", ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idLivro", aoLivro.liv_id_livro));
@@ -202,7 +203,7 @@ namespace ProjetoLivraria.DAO
         public int DeletaLivro(Livros aoLivro)
         {
             var liQtdRegistrosDeletados = 0;
-            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionStrings"].ConnectionString))
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
             {
                 try
                 {
