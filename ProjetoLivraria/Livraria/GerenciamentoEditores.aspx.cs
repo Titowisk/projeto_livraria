@@ -150,6 +150,43 @@ namespace ProjetoLivraria.Livraria
 
         protected void gvGerenciamentoEditores_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            try
+            {
+                decimal ldcIdeditor = Convert.ToDecimal((gvGerenciamentoEditores.Rows[e.RowIndex].FindControl("lblIdEditor") as Label).Text);
+                // buscar o editor
+                Editores loEditor = ioEditoresDAO.BuscaEditores(ldcIdeditor).FirstOrDefault();
+                if (loEditor != null)
+                {
+                    //Crie LivrosDAO e o método FindLivrosByEditor() que deve receber um Editor como parâmetro e retornar
+                    //uma lista de livros.
+                    LivrosDAO loLivrosDAO = new LivrosDAO();
+
+                    if (loLivrosDAO.FindLivrosByEditor(loEditor).Count > 0)
+                    {
+                        // se a busca retornar pelo menos 1 livro, não pode deletar o editor
+                        HttpContext.Current.Response.Write("<script>alert('Não é possível remover o editor selecionado pois existem livros associados a ele.');</script>");
+                    }
+                    else
+                    {
+                        // deletar o editor
+                        ioEditoresDAO.DeletaEditor(loEditor);
+                        // sucesso
+                        HttpContext.Current.Response.Write("<script>alert('Editor removido com sucesso!');</script>");
+                        // reseta o index
+                        gvGerenciamentoEditores.EditIndex = -1;
+                        // recarrega os dados
+                        CarregaDados();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // erro
+                HttpContext.Current.Response.Write("<script>alert('Editor removido com sucesso!');</script>");
+                HttpContext.Current.Response.Write($"<script>console.log({ex.Message});</script>");
+                HttpContext.Current.Response.Write($"<script>console.log({ex.StackTrace});</script>");
+            }
 
         }
 
