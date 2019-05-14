@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GerenciamentoEditores.aspx.cs" Inherits="ProjetoLivraria.Livraria.GerenciamentoEditores" %>
 
-<asp:Content>
+<asp:Content runat="server" ContentPlaceHolderID="MainContent" ID="ContentEditores">
     <div class="row" style="text-align: left;">
         <h2>Cadastro Novo Editor</h2>
         <table>
@@ -27,7 +27,7 @@
                 </td>
                 <%-- URL Editor --%>
                 <td>
-                    <asp:Label ID="lblCadastroUrlEditor" runat="server" Font-Size="16pt" Text="E-mail: "></asp:Label>
+                    <asp:Label ID="lblCadastroUrlEditor" runat="server" Font-Size="16pt" Text="Url: "></asp:Label>
                 </td>
                 <td>
                     <asp:TextBox ID="tbxCadastroUrlEditor" runat="server" CssClass="form-control" Height="35px"
@@ -140,6 +140,4 @@
             <SortedDescendingHeaderStyle BackColor="#4870BE" />
         </asp:GridView>
     </div>
-</asp:Content>
-
 </asp:Content>
