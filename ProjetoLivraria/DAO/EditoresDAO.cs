@@ -69,7 +69,7 @@ namespace ProjetoLivraria.DAO
                     ioConexao.Open();
                     if (aoNovoEditor == null) throw new NullReferenceException();
                     ioQuery = new SqlCommand($@"INSERT INTO EDI_EDITORES({_id}, {_nome}, {_email}, {_url})
-                                            VALUES (@idEditor, @nomeEditor, @emailEditor, @urlEditor)");
+                                            VALUES (@idEditor, @nomeEditor, @emailEditor, @urlEditor)", ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idEditor", aoNovoEditor.edi_id_editor));
                     ioQuery.Parameters.Add(new SqlParameter("@nomeEditor", aoNovoEditor.edi_nm_editor));
                     ioQuery.Parameters.Add(new SqlParameter("@emailEditor", aoNovoEditor.edi_ds_email));
