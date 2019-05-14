@@ -129,6 +129,48 @@ namespace ProjetoLivraria.DAO
 
         }
 
+        internal BindingList<Livros> FindLivrosByTipoLivro(TipoLivro loTipoLivro)
+        {
+            var ioListLivros = new BindingList<Livros>();
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+            {
+                ioConexao.Open();
+                try
+                {
+                    if (loTipoLivro == null)
+                    {
+                        throw new ArgumentException("Categoria para busca não foi informada");
+                    }
+                    else
+                    {
+                        ioQuery = new SqlCommand(
+                            @"SELECT * FROM LIV_LIVROS
+                                INNER JOIN TIL_TIPO_LIVRO ON TIL_ID_TIPO_LIVRO = LIV_ID_TIPO_LIVRO
+                                WHERE TIL_ID_TIPO_LIVRO = @idTipoLivro", ioConexao);
+                        ioQuery.Parameters.Add(new SqlParameter("@idTipoLivro", loTipoLivro.til_id_tipo_livro));
+                    }
+                    using (SqlDataReader loReader = ioQuery.ExecuteReader())
+                    {
+                        while (loReader.Read())
+                        {
+                            ioListLivros.Add(new Livros(
+                                loReader.GetDecimal(0), loReader.GetDecimal(1), loReader.GetDecimal(2),
+                                loReader.GetString(3), loReader.GetDecimal(4), loReader.GetDecimal(5),
+                                loReader.GetString(6), loReader.GetInt32(7)
+                                ));
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return ioListLivros;
+        }
+
         public BindingList<Livros> FindLivrosByEditor(Editores ioEditor)
         {
             var ioListLivros = new BindingList<Livros>();
