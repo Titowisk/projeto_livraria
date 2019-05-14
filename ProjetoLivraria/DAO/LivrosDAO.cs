@@ -129,6 +129,47 @@ namespace ProjetoLivraria.DAO
 
         }
 
+        public BindingList<Livros> FindLivrosByEditor(Editores ioEditor)
+        {
+            var ioListLivros = new BindingList<Livros>();
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+            {
+                ioConexao.Open();
+                try
+                {
+                    if (ioEditor == null)
+                    {
+                        throw new ArgumentException("Autor para busca não foi informado");
+                    }
+                    else
+                    {
+                        ioQuery = new SqlCommand(
+                            @"SELECT * FROM LIV_LIVROS
+                                INNER JOIN EDI_EDITORES on EDI_ID_EDITOR = LIV_ID_EDITOR
+                                WHERE EDI_ID_EDITOR = @idEditor", ioConexao);
+                        ioQuery.Parameters.Add(new SqlParameter("@idEditor", ioEditor.edi_id_editor));
+                    }
+                    using (SqlDataReader loReader = ioQuery.ExecuteReader())
+                    {
+                        while (loReader.Read())
+                        {
+                            ioListLivros.Add(new Livros(
+                                loReader.GetDecimal(0), loReader.GetDecimal(1), loReader.GetDecimal(2),
+                                loReader.GetString(3), loReader.GetDecimal(4), loReader.GetDecimal(5),
+                                loReader.GetString(6), loReader.GetInt32(7)
+                                ));
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return ioListLivros;
+        }
+
         // insert
         public int InsereLivro (Livros aoNovoLivro)
         {
