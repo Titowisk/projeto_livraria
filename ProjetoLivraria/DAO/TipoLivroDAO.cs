@@ -47,5 +47,31 @@ namespace ProjetoLivraria.DAO
             }
             return ioListTipoLivro;
         }
+
+        internal int InsereTipoLivro(TipoLivro loTipoLivro)
+        {
+            var liQtdRegistrosInseridos = 0;
+
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+            {
+                try
+                {
+                    ioConexao.Open();
+                    if (loTipoLivro == null) throw new NullReferenceException();
+                    ioQuery = new SqlCommand($@"INSERT INTO TIL_TIPO_LIVRO(TIL_ID_TIPO_LIVRO, TIL_DS_DESCRICAO)
+                                            VALUES (@idTipoLivro, @descricaoTipoLivro)", ioConexao);
+                    ioQuery.Parameters.Add(new SqlParameter("@idTipoLivro", loTipoLivro.til_id_tipo_livro));
+                    ioQuery.Parameters.Add(new SqlParameter("@descricaoTipoLivro", loTipoLivro.til_ds_descricao));
+                    liQtdRegistrosInseridos = ioQuery.ExecuteNonQuery();
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return liQtdRegistrosInseridos;
+        }
     }
 }
