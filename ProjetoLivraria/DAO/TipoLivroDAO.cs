@@ -73,5 +73,32 @@ namespace ProjetoLivraria.DAO
             }
             return liQtdRegistrosInseridos;
         }
+
+        internal int AtualizaTipoLivro(TipoLivro aoTipoLivro)
+        {
+            var liQtdRegistrosAtualizados = 0;
+
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+            {
+                try
+                {
+                    ioConexao.Open();
+                    if (aoTipoLivro == null) throw new NullReferenceException();
+                    ioQuery = new SqlCommand(
+                        $@"UPDATE TIL_TIPO_LIVRO
+                            SET TIL_DS_DESCRICAO = @descricaoTipoLivro
+                            WHERE TIL_ID_TIPO_LIVRO = @idEditor", ioConexao);
+                    ioQuery.Parameters.Add(new SqlParameter("@idEditor", aoTipoLivro.til_id_tipo_livro));
+                    ioQuery.Parameters.Add(new SqlParameter("@descricaoTipoLivro", aoTipoLivro.til_ds_descricao));
+                    liQtdRegistrosAtualizados = ioQuery.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return liQtdRegistrosAtualizados;
+        }
     }
 }
