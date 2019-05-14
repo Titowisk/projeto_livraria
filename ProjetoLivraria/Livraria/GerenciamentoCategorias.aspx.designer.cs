@@ -13,33 +13,6 @@ namespace ProjetoLivraria.Livraria {
     public partial class GerenciamentoCategorias {
         
         /// <summary>
-        /// lblCadastroNomeTipoLivro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCadastroNomeTipoLivro;
-        
-        /// <summary>
-        /// tbxCadastroNomeTipoLivro control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxCadastroNomeTipoLivro;
-        
-        /// <summary>
-        /// RequiredFieldValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
-        /// <summary>
         /// lblCadastroCategoriaTipoLivro control.
         /// </summary>
         /// <remarks>

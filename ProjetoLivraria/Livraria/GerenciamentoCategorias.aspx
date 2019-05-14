@@ -6,16 +6,7 @@
         <h2>Cadastro Nova Categoria</h2>
         <table>
             <tr style="display: grid;">
-                <%-- ID TipoLivro --%>
-                <td>
-                    <asp:Label ID="lblCadastroNomeTipoLivro" runat="server" Font-size="16pt" Text="Nome: "></asp:Label>
-                </td>
-                <td>
-                    <asp:TextBox ID="tbxCadastroNomeTipoLivro" runat="server" CssClass="form-control" Height="35px"
-                        Width="400px"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="tbxCadastroNomeTipoLivro"
-                        Style="color: red;" ErrorMessage="* Digite o nome da Categoria."></asp:RequiredFieldValidator>
-                </td>
+                
                 <%-- Descrição TipoLivro --%>
                 <td>
                     <asp:Label ID="lblCadastroCategoriaTipoLivro" runat="server" Font-Size="16pt" Text="Categoria: "></asp:Label>
@@ -45,13 +36,13 @@
                 <%-- ID --%>
                 <asp:TemplateField Visible="false">
                     <EditItemTemplate>
-                        <asp:Label ID="lblEditIdTipoLivro" runat="server" Text='<%# Eval("aaaaaaaaaaa") %>'></asp:Label>
+                        <asp:Label ID="lblEditIdTipoLivro" runat="server" Text='<%# Eval("til_id_tipo_livro") %>'></asp:Label>
                     </EditItemTemplate>
                     <HeaderTemplate>
                         <asp:Label ID="lblTextIdTipoLivro" runat="server" Text="ID"></asp:Label>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblIdTipoLivro" runat="server" Text='<%# Eval("aaaaaaaaaaa") %>'></asp:Label>
+                        <asp:Label ID="lblIdTipoLivro" runat="server" Text='<%# Eval("til_id_tipo_livro") %>'></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" Width="50px" />
                     <ItemStyle HorizontalAlign="Center" />
@@ -60,13 +51,13 @@
                 <asp:TemplateField>
                     <EditItemTemplate>
                         <asp:TextBox ID="tbxEditNomeTipoLivro" runat="server" CssClass="form-control" Height="35px" MaxLength="15" 
-                            Text='<%# Eval("aaaaaaaaaaa") %>'></asp:TextBox>
+                            Text='<%# Eval("til_ds_descricao") %>'></asp:TextBox>
                     </EditItemTemplate>
                     <HeaderTemplate>
                         <asp:Label ID="lblTextoNomeTipoLivro" runat="server" Style="text-align: center;" Text="Nome"></asp:Label>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblNomeTipoLivro" runat="server" Style="text-align: left;" Text='<%# Eval("aaaaaaaaaaa") %>'></asp:Label>
+                        <asp:Label ID="lblNomeTipoLivro" runat="server" Style="text-align: left;" Text='<%# Eval("til_ds_descricao") %>'></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Left" Width="900px"></HeaderStyle>
                     <ItemStyle HorizontalAlign="Left"></ItemStyle>
@@ -89,7 +80,7 @@
                             CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" CausesValidation="false" />&nbsp;
                     </ItemTemplate>
                     
-                    <HeaderStyle HorizontalAlign="Right" Width="150px"></HeaderStyle>
+                    <HeaderStyle HorizontalAlign="Right" Width="250px"></HeaderStyle>
                 </asp:TemplateField>
             </Columns>
             <AlternatingRowStyle BackColor="White" />
