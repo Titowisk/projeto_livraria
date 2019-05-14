@@ -112,7 +112,31 @@ namespace ProjetoLivraria.Livraria
 
         protected void gvGerenciamentoCategorias_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-
+            try
+            {
+                var currentRow = gvGerenciamentoCategorias.Rows[e.RowIndex];
+                decimal ldcIdTipoLivro = Convert.ToDecimal((currentRow.FindControl("lblIdTipoLivro") as Label).Text);
+                TipoLivro loTipoLivro = this.ioTipoLivroDAO.BuscaCategorias(ldcIdTipoLivro).FirstOrDefault();
+                if (loTipoLivro != null)
+                {
+                    //Crie LivrosDAO e o método FindLivrosByTipoLivro() que deve receber um Autor como parâmetro e retornar
+                    //uma lista de livros.
+                    LivrosDAO loLivrosDAO = new LivrosDAO();
+                    if (loLivrosDAO.FindLivrosByTipoLivro(loTipoLivro).Count != 0)
+                        HttpContext.Current.Response.Write("<script>alert('Não é possível remover a categoria selecionada pois existem livros associados a ela.');</script>");
+                    else
+                    {
+                        this.ioTipoLivroDAO.DeletaAutor(loTipoLivro);
+                        this.CarregaDados();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.Write("<script>alert('Erro na remoção da categoria selecionada.');</script>");
+                HttpContext.Current.Response.Write($"<script>console.log({ex.Message});</script>");
+                HttpContext.Current.Response.Write($"<script>console.log({ex.StackTrace});</script>");
+            }
         }
 
         protected void gvGerenciamentoCategorias_RowCommand(object sender, GridViewCommandEventArgs e)

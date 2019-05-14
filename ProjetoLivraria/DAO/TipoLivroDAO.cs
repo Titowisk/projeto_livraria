@@ -100,5 +100,30 @@ namespace ProjetoLivraria.DAO
             }
             return liQtdRegistrosAtualizados;
         }
+
+        internal int DeletaAutor(TipoLivro loTipoLivro)
+        {
+            var liQtdRegistrosDeletados = 0;
+
+            using (ioConexao = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString))
+            {
+                try
+                {
+                    ioConexao.Open();
+                    if (loTipoLivro == null) throw new NullReferenceException();
+                    ioQuery = new SqlCommand(
+                        $@"DELETE FROM TIL_TIPO_LIVRO
+                            WHERE TIL_ID_TIPO_LIVRO = @idTipoLivro", ioConexao);
+                    ioQuery.Parameters.Add(new SqlParameter("@idTipoLivro", loTipoLivro.til_id_tipo_livro));
+                    liQtdRegistrosDeletados = ioQuery.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return liQtdRegistrosDeletados;
+        }
     }
 }
