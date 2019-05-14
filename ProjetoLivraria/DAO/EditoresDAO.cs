@@ -98,8 +98,8 @@ namespace ProjetoLivraria.DAO
                     if (aoEditor == null) throw new NullReferenceException();
                     ioQuery = new SqlCommand(
                         $@"UPDATE EDI_EDITORES
-                            SET ({_nome} = @nomeEditor, {_email} = @emailEditor, {_url} = @urlEditor)
-                            WHERE {_id} = @idEditor");
+                            SET {_nome} = @nomeEditor, {_email} = @emailEditor, {_url} = @urlEditor
+                            WHERE {_id} = @idEditor", ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idEditor", aoEditor.edi_id_editor));
                     ioQuery.Parameters.Add(new SqlParameter("@nomeEditor", aoEditor.edi_nm_editor));
                     ioQuery.Parameters.Add(new SqlParameter("@emailEditor", aoEditor.edi_ds_email));
@@ -109,7 +109,7 @@ namespace ProjetoLivraria.DAO
                 catch (Exception)
                 {
 
-                    throw new Exception("Não foi possível atualizar o editor.");
+                    throw;
                 }
             }
             return liQtdRegistrosAtualizados;
@@ -128,14 +128,14 @@ namespace ProjetoLivraria.DAO
                     if (aoEditor == null) throw new NullReferenceException();
                     ioQuery = new SqlCommand(
                         $@"DELETE FROM EDI_EDITORES
-                            WHERE {_id} = @idEditor");
+                            WHERE {_id} = @idEditor", ioConexao);
                     ioQuery.Parameters.Add(new SqlParameter("@idEditor", aoEditor.edi_id_editor));
                     liQtdRegistrosDeletados = ioQuery.ExecuteNonQuery();
                 }
                 catch (Exception)
                 {
 
-                    throw new Exception("Não foi possível deletar o editor.");
+                    throw;
                 }
             }
             return liQtdRegistrosDeletados;

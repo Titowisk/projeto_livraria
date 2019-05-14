@@ -83,17 +83,69 @@ namespace ProjetoLivraria.Livraria
 
         protected void gvGerenciamentoEditores_RowEditing(object sender, GridViewEditEventArgs e)
         {
-
+            // pega o index da linha que será editada
+            gvGerenciamentoEditores.EditIndex = e.NewEditIndex;
+            CarregaDados();
         }
 
         protected void gvGerenciamentoEditores_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-
+            // reseta o index de linhas
+            gvGerenciamentoEditores.EditIndex = -1;
+            CarregaDados();
         }
 
         protected void gvGerenciamentoEditores_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            var currentRow = gvGerenciamentoEditores.Rows[e.RowIndex];
+            // pegar os valores sob a mascaraca de edição
+            // id
+            decimal ldcIdEditor = Convert.ToDecimal((currentRow.FindControl("lblEditIdEditor") as Label).Text);
+            // nome
+            string lsNomeEditor = (currentRow.FindControl("tbxEditNomeEditor") as TextBox).Text;
+            // email
+            string lsEmailEditor = (currentRow.FindControl("tbxEditEmailEditor") as TextBox).Text;
+            // url
+            string lsUrlEditor = (currentRow.FindControl("tbxEditUrlEditor") as TextBox).Text;
 
+            // verificar se são diferentes de espaço em branco
+            if (String.IsNullOrWhiteSpace(lsNomeEditor))
+            {
+                HttpContext.Current.Response.Write("<script>alert('Preencha o campo de nome!');</script>");
+            }
+            else if (String.IsNullOrWhiteSpace(lsEmailEditor))
+            {
+                HttpContext.Current.Response.Write("<script>alert('Preencha o campo de email!');</script>");
+            }
+            else if (String.IsNullOrWhiteSpace(lsUrlEditor))
+            {
+                HttpContext.Current.Response.Write("<script>alert('Preencha o campo de url!');</script>");
+            }
+            else
+            {
+                try
+                {
+                    Editores loEditor = new Editores(ldcIdEditor, lsNomeEditor, lsEmailEditor, lsUrlEditor);
+                    // usar o DAO para atualizar o Editor
+                    ioEditoresDAO.AtualizaEditor(loEditor);
+
+                    // resetar o index
+                    gvGerenciamentoEditores.EditIndex = -1;
+                    // recarregar a lista de editores
+                    CarregaDados();
+                    // sucesso
+                    HttpContext.Current.Response.Write("<script>alert('Editor atualizado com sucesso!');</script>");
+
+                }
+                catch (Exception ex)
+                {
+
+                    // caso erro
+                    HttpContext.Current.Response.Write("<script>alert('Ocorreu um problema ao atualizar Editor.');</script>");
+                    HttpContext.Current.Response.Write($"<script>console.log({ex.StackTrace});</script>");
+                    HttpContext.Current.Response.Write($"<script>console.log({ex.Message});</script>");
+                }
+            }
         }
 
         protected void gvGerenciamentoEditores_RowDeleting(object sender, GridViewDeleteEventArgs e)
