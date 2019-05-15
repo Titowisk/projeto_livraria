@@ -70,6 +70,12 @@ namespace ProjetoLivraria.Livraria
             }
         }
 
+        public Autores AutorSessao
+        {
+            get { return (Autores)Session["SessionAutorSelecionado"]; }
+            set { Session["SessionAutorSelecionado"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -98,8 +104,19 @@ namespace ProjetoLivraria.Livraria
 
         private void CarregaDados()
         {
-            // carrega uma lista de livros
-            this.ListaLivros = ioLivrosDAO.BuscaLivros();
+            if (AutorSessao != null)
+            {
+                // se existir sessao de autor
+                // carregar os livros daquele autor
+                this.ListaLivros = ioLivrosDAO.FindLivrosByAutor(AutorSessao);
+
+            }
+            else
+            {
+                // se não, carrega tudo
+                // carrega uma lista de livros
+                this.ListaLivros = ioLivrosDAO.BuscaLivros();
+            }
 
             // carrega o gridview de livros
             gvGerenciamentoLivros.DataSource = ListaLivros.OrderBy(livro => livro.liv_nm_titulo);

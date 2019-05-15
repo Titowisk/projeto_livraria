@@ -169,12 +169,12 @@ namespace ProjetoLivraria.Livraria
                 {
                     case "CarregaLivrosAutor":
                         int liRowIndex = Convert.ToInt32(e.CommandArgument);
-                        string IdAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("lblEditIdAutor") as Label).Text;
+                        string IdAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("lblIdAutor") as Label).Text;
                         decimal ldcIdAutor = Convert.ToDecimal(IdAutor);
 
-                        string lsNomeAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("tbxEditNomeAutor") as TextBox).Text;
-                        string lsSobrenomeAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("tbxEditSobrenomeAutor") as TextBox).Text;
-                        string lsEmailAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("tbxEditEmailAutor") as TextBox).Text;
+                        string lsNomeAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("lblNomeAutor") as Label).Text;
+                        string lsSobrenomeAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("lblSobrenomeAutor") as Label).Text;
+                        string lsEmailAutor = (this.gvGerenciamentoAutores.Rows[liRowIndex].FindControl("lblEmailAutor") as Label).Text;
 
                         Autores loAutores = new Autores(ldcIdAutor, lsNomeAutor, lsSobrenomeAutor, lsEmailAutor);
                         this.AutorSessao = loAutores;
