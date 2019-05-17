@@ -282,6 +282,10 @@ namespace ProjetoLivraria.Livraria
 
         protected void gvGerenciamentoLivros_RowEditing(object sender, GridViewEditEventArgs e)
         {
+            // pegar o valor default para as dropdownlists
+            var currentRow = gvGerenciamentoLivros.Rows[e.NewEditIndex];
+            var loAutorName = (currentRow.FindControl("lblAutorLivro")as Label).Text;
+            var index = ListaAutores.IndexOf(ListaAutores.Single(a => a.aut_nm_nome == loAutorName));
             gvGerenciamentoLivros.EditIndex = e.NewEditIndex;
             CarregaDados();
             // carregar as dropdown lists de cada modelo (autor, categoria e editor) para edição
@@ -292,7 +296,7 @@ namespace ProjetoLivraria.Livraria
             // autor
             DropDownList gvDropDownListAutor = (gvGerenciamentoLivros.Rows[e.NewEditIndex].FindControl("ddlEditAutorLivro") as DropDownList);
             CarregaDropDownList(gvDropDownListAutor, "AutorNome", "AutorId", CreateAutorDataSource);
-
+            gvDropDownListAutor.SelectedIndex = index;
             // editor
             DropDownList gvDropDownListEditor = (gvGerenciamentoLivros.Rows[e.NewEditIndex].FindControl("ddlEditEditorLivro") as DropDownList);
             CarregaDropDownList(gvDropDownListEditor, "EditorNome", "EditorId", CreateEditorDataSource);
